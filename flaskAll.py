@@ -322,17 +322,17 @@ def stockSearch():
     def strStockCount(strDict):
         str = strDict['content']
         # 循环插入搜索股票关键词，如果有count，就放到dict里
-        contentStockCount = {}
+        contentStockCountDict = {}
         for stockSearchWord in stockSearchWordLi:
             if (str.count(stockSearchWord)):
-                contentStockCount[stockSearchWord] = str.count(stockSearchWord)
+                # contentStockCountDict[stockSearchWord] = str.count(stockSearchWord)
+                contentStockCountDict[stockSearchWord] = 'YES'
         # sub='苏宁'
-        print(contentStockCount)
-        strDict['contentStockCount'] = contentStockCount
+        print(contentStockCountDict)
+        strDict['contentStockCountDict'] = contentStockCountDict
         return strDict
 
     response = strStockCount(contentDict)
-
     return json.dumps(response,ensure_ascii=False)
 
 

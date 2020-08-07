@@ -326,7 +326,7 @@ def stockSearch():
         for stockSearchWord in stockSearchWordLi:
             if (str.count(stockSearchWord)):
                 # contentStockCountDict[stockSearchWord] = str.count(stockSearchWord)
-                contentStockCountDict[stockSearchWord] = 'YES'
+                contentStockCountDict[stockSearchWord] = 'TRUE  '
         # sub='苏宁'
         print(contentStockCountDict)
         strDict['contentStockCountDict'] = contentStockCountDict
@@ -337,4 +337,4 @@ def stockSearch():
 
 
 if __name__ == '__main__':
-    server.run(debug=True, port=8891, host='0.0.0.0')  # 指定端口、host,0.0.0.0代表不管几个网卡，任何ip都可以访问
+    server.run(port=8891, host='0.0.0.0')  # 指定端口、host,0.0.0.0代表不管几个网卡，任何ip都可以访问

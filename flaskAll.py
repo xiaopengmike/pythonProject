@@ -1,5 +1,6 @@
 #coding=utf-8
 import flask, json
+# from gevent import pywsgi
 from flask import request
 # '''
 # flask： web框架，通过flask提供的装饰器@server.route()将普通函数转换为服务
@@ -10,11 +11,13 @@ server = flask.Flask(__name__)
 @server.route('/stockSearch', methods=['post'])
 def stockSearch():
     content = request.form.get('content')
+    index = request.form.get('index')
     contentDict = {'content':content}
     print(contentDict)
-
+    print("index")
+    print(index)
     # 获取到post的数据，统计股票出现次数
-    stockSearchWordLi = ['ChiNameAbbr', '平安银行', '万科', '金田实业', '国农科技', '世纪星源', '深振业', '全新好', '神州高铁', '中国宝安', '美丽生态',
+    stockSearchWordLi = ['ChiNameAbbr', '平安银行','畅联股份', '万科', '金田实业', '国农科技', '世纪星源', '深振业', '全新好', '神州高铁', '中国宝安', '美丽生态',
                          '深物业',
                          '南玻股份', '深圳石化', '沙河股份', '深圳中浩', '康佳集团', '深中华', '神州长城', '深粮控股', '深华发', '深科技', '招商港口', '深天地',
                          '招商地产',
@@ -319,7 +322,7 @@ def stockSearch():
                          '万祥科技', '交通中心', '思柏精密', '鸿基节能', '思普润', '中集车辆', '普瑞眼科', '斯瑞尔', '华研精机', '天好信息', '维克液压', '久祺股份',
                          '天亿马', '戎美股份', '德宝股份', '华厦眼科', '粤万年青', '华智股份', '苏州天禄', '佛朗斯']
 
-    def strStockCount(strDict):
+    def strStockCount(strDict,index):
         str = strDict['content']
         # 循环插入搜索股票关键词，如果有count，就放到dict里
         contentStockCountDict = {}
@@ -330,9 +333,10 @@ def stockSearch():
         # sub='苏宁'
         print(contentStockCountDict)
         strDict['contentStockCountDict'] = contentStockCountDict
+        strDict['index'] = index
         return strDict
 
-    response = strStockCount(contentDict)
+    response = strStockCount(contentDict,index)
     return json.dumps(response,ensure_ascii=False)
 
 

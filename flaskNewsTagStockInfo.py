@@ -1,4 +1,7 @@
 #coding=utf-8
+# api输入文章content，
+# 返回content，market，code
+
 import flask, json
 # from gevent import pywsgi
 from flask import request
@@ -32129,21 +32132,35 @@ def stockSearch():
 
 
     def strStockCount(strDict):
-        str = strDict['content']
+        str01 = strDict['content']
         # 循环插入搜索股票关键词，如果有count，就放到dict里
+        contentStockCountDictLi = []
         contentStockCountDict = {}
-        for stockSearchWord in stockSearchWordLi:
-            # print(stockSearchWord['name'])
-            if (str.count(stockSearchWord['name'])):
-                contentStockCountDict[stockSearchWord['name']] = str.count(stockSearchWord['name'])
-                # contentStockCountDict[stockSearchWord] = 'TRUE  '
+        for stockSearchWordDic in stockSearchWordLi:
+            # print(stockSearchWordDic['name'])
+            if (str01.count(stockSearchWordDic['name'])):
+                print(stockSearchWordDic)
+                # contentStockCountDict[stockSearchWordDic['name']] = str01.count(stockSearchWordDic['name'])
+                contentStockCountDict = stockSearchWordDic
+                contentStockCountDict['count'] = str01.count(stockSearchWordDic['name'])
+                contentStockCountDictLi.append(contentStockCountDict)
+
+        contentStockCountDictLi.sort(key=lambda k: (k.get('count', 0)),reverse=True)
+        print(contentStockCountDictLi)
+
+        if(len(contentStockCountDictLi)):
+            strDict['stockName'] = contentStockCountDictLi[0]['name']
+            strDict['market'] = contentStockCountDictLi[0]['market']
+            strDict['code'] = contentStockCountDictLi[0]['SecuCode']
+        else:
+            strDict['stockName'] = ""
+            strDict['market'] = ""
+            strDict['code'] = ""
+
         # sub='苏宁'
-        print(contentStockCountDict)
-        stockCountList = sorted(contentStockCountDict.keys())
-        if(len(stockCountList)):
-            strDict['stock'] = stockCountList[0]
-        else:strDict['stock'] = ""
-        strDict['contentStockCountDict'] = contentStockCountDict
+        # stockCountList = sorted(contentStockCountDict.keys())
+        strDict['contentStockCountDictLi'] = contentStockCountDictLi
+
         return strDict
 
     response = strStockCount(contentDict)

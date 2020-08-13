@@ -328,8 +328,8 @@ def stockSearch():
         contentStockCountDict = {}
         for stockSearchWord in stockSearchWordLi:
             if (str.count(stockSearchWord)):
-                # contentStockCountDict[stockSearchWord] = str.count(stockSearchWord)
-                contentStockCountDict[stockSearchWord] = 'TRUE  '
+                contentStockCountDict[stockSearchWord] = str.count(stockSearchWord)
+                # contentStockCountDict[stockSearchWord] = 'TRUE  '
         # sub='苏宁'
         print(contentStockCountDict)
         strDict['contentStockCountDict'] = contentStockCountDict

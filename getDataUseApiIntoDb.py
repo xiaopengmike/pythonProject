@@ -19,7 +19,8 @@ db=db_name
 )
 
 cursor = connection.cursor(cursor=pymysql.cursors.DictCursor)
-sql='SELECT * FROM `lc_news` LIMIT 2'
+# effect_row = cursor.execute('SELECT * FROM `lc_news` LIMIT 100')
+sql='SELECT * FROM `lc_news` LIMIT 10'
 cursor.execute(sql)
 newsResultList=cursor.fetchall()
 print(newsResultList)
@@ -71,18 +72,31 @@ def itemApiResIntoDb(newsResult):
     print('response')
     print(response)
     response = json.loads(response)
-    print(response['content'])
 
     res_content=response['content']
     res_tittle=response['tittle']
+    res_code=response['code']
     res_time=response['time']
     res_stockName=response['stockName']
     res_market=response['market']
-    res_code=response['code']
 
-    code = 'test10'
-    tittle = 'test10'
-    # sql = "INSERT INTO app_config_stock_news_info (content,tittle,time,stockName,market,code) VALUES ('%s','%s','%s','%s','%s','%s')" % (res_content,res_tittle,res_time,res_stockName,res_market,res_code)
+
+    # code = 'test12'
+    sql = "INSERT INTO app_config_stock_news_info (content,tittle,code,time,stockName,market) VALUES ('%s','%s','%s','%s','%s','%s')" % (res_content,res_tittle,res_code,res_time,res_stockName,res_market)
+
+    cursor02.execute(sql)
+    connection02.commit()
+
+    # res_content=response['content']
+    # res_tittle=response['tittle']
+    # res_time=response['time']
+    # res_stockName=response['stockName']
+    # res_market=response['market']
+    # res_code=response['code']
+    #
+    # code = 'test10'
+    # tittle = 'test10'
+    # # sql = "INSERT INTO app_config_stock_news_info (content,tittle,time,stockName,market,code) VALUES ('%s','%s','%s','%s','%s','%s')" % (res_content,res_tittle,res_time,res_stockName,res_market,res_code)
 
     # response[‘time’]
 
@@ -95,9 +109,6 @@ for newsResult in newsResultList:
 
 # id = '10'
 
-
-cursor02.execute(sql)
-connection02.commit()
 
 
 

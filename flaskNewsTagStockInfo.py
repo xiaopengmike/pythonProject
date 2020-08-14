@@ -12,7 +12,13 @@ server = flask.Flask(__name__)
 @server.route('/stockSearch', methods=['post'])
 def stockSearch():
     content = request.form.get('content')
-    contentDict = {'content':content}
+    tittle = request.form.get('tittle')
+    time = request.form.get('time')
+    contentDict = {
+        'content':content,
+        'tittle':tittle,
+        'time':time,
+    }
     print(contentDict)
     # 获取到post的数据，统计股票出现次数
     # stockSearchWordLi = ['ChiNameAbbr', '平安银行','畅联股份', '万科', '金田实业']

@@ -1,6 +1,7 @@
 import pymysql
 import requests
 import json
+import uuid
 
 #数据库拿出数据
 host = 'rm-wz9s90lao15s6j4v2ro.mysql.rds.aliyuncs.com'
@@ -20,7 +21,7 @@ db=db_name
 
 cursor = connection.cursor(cursor=pymysql.cursors.DictCursor)
 # effect_row = cursor.execute('SELECT * FROM `lc_news` LIMIT 100')
-sql='SELECT * FROM `lc_news` LIMIT 10'
+sql='SELECT * FROM `lc_news` LIMIT 5000'
 cursor.execute(sql)
 newsResultList=cursor.fetchall()
 print(newsResultList)
@@ -80,34 +81,19 @@ def itemApiResIntoDb(newsResult):
     res_stockName=response['stockName']
     res_market=response['market']
 
-
     # code = 'test12'
-    sql = "INSERT INTO app_config_stock_news_info (content,tittle,code,time,stockName,market) VALUES ('%s','%s','%s','%s','%s','%s')" % (res_content,res_tittle,res_code,res_time,res_stockName,res_market)
+    if(res_code):
+        sql = "INSERT INTO app_config_shares_news_info (content,title,code,time,stockName,market) VALUES ('%s','%s','%s','%s','%s','%s')" % (res_content,res_tittle,res_code,res_time,res_stockName,res_market)
 
-    cursor02.execute(sql)
-    connection02.commit()
-
-    # res_content=response['content']
-    # res_tittle=response['tittle']
-    # res_time=response['time']
-    # res_stockName=response['stockName']
-    # res_market=response['market']
-    # res_code=response['code']
-    #
-    # code = 'test10'
-    # tittle = 'test10'
-    # # sql = "INSERT INTO app_config_stock_news_info (content,tittle,time,stockName,market,code) VALUES ('%s','%s','%s','%s','%s','%s')" % (res_content,res_tittle,res_time,res_stockName,res_market,res_code)
-
-    # response[‘time’]
+        cursor02.execute(sql)
+        connection02.commit()
 
 for newsResult in newsResultList:
-    itemApiResIntoDb(newsResult)
-
+    try:itemApiResIntoDb(newsResult)
+    except:continue
 
 #test插入数据库
 
-
-# id = '10'
 
 
 

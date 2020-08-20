@@ -30,9 +30,7 @@ def stockTagSearch():
     tagSearchWordLi = dataSource.tagSearchWordLi
 
     def strStockTagCount(responseDict):
-        # 先分析标题，有必要再分析正文
         titleStr = responseDict['tittle']
-        contentStr = responseDict['content']
         # 循环插入搜索关键词，如果有count，就放到dict里
         contentStockCountDictLi = []
         contentStockCountDict = {}
@@ -43,25 +41,10 @@ def stockTagSearch():
                 contentStockCountDict = stockSearchWordDic
                 contentStockCountDict['count'] = titleStr.count(stockSearchWordDic['name'])
                 contentStockCountDictLi.append(contentStockCountDict)
-        # title循环结束后排序
+
+        # 循环结束后排序
         contentStockCountDictLi.sort(key=lambda k: (k.get('count', 0)), reverse=True)
         print(contentStockCountDictLi)
-        # 判断标题中是否有 和count最大相等的第二个，如果有去内容中判断
-        if len(contentStockCountDictLi)>1:
-            if (contentStockCountDictLi[0]['count'] == contentStockCountDictLi[1]['count']):
-                contentStockCountDictLi = []
-                contentStockCountDict = {}
-                for stockSearchWordDic in stockSearchWordLi:
-                    if contentStr.count(stockSearchWordDic['name']):
-                        print(stockSearchWordDic)
-                        # contentStockCountDict[stockSearchWordDic['name']] = contentStr.count(stockSearchWordDic['name'])
-                        contentStockCountDict = stockSearchWordDic
-                        contentStockCountDict['count'] = contentStr.count(stockSearchWordDic['name'])
-                        contentStockCountDictLi.append(contentStockCountDict)
-
-                # content循环结束后排序
-                contentStockCountDictLi.sort(key=lambda k: (k.get('count', 0)), reverse=True)
-                print(contentStockCountDictLi)
 
         if len(contentStockCountDictLi):
             responseDict['stockName'] = contentStockCountDictLi[0]['name']
@@ -87,30 +70,13 @@ def stockTagSearch():
                 contentTagCountDict['count'] = titleStr.count(tagSearchWordDic['eventName'])
                 contentTagCountDictLi.append(contentTagCountDict)
 
-        # title循环结束后排序
+        # 循环结束后排序
         contentTagCountDictLi.sort(key=lambda k: (k.get('count', 0)), reverse=True)
         print(contentTagCountDictLi)
-        # 判断标题中是否有和count最大相等的第二个，如果有去内容中判断
-        if len(contentTagCountDictLi) > 1:
-            if (contentTagCountDictLi[0]['count'] == contentTagCountDictLi[1]['count']):
-                contentTagCountDictLi = []
-                contentTagCountDict = {}
-                for tagSearchWordDic in tagSearchWordLi:
-                    if contentStr.count(tagSearchWordDic['eventName']):
-                        print(tagSearchWordDic)
-                        # contentStockCountDict[stockSearchWordDic['name']] = contentStr.count(stockSearchWordDic['name'])
-                        contentTagCountDict = tagSearchWordDic
-                        contentTagCountDict['count'] = contentStr.count(tagSearchWordDic['eventName'])
-                        contentTagCountDictLi.append(contentTagCountDict)
-
-                # content循环结束后排序
-                contentTagCountDictLi.sort(key=lambda k: (k.get('count', 0)), reverse=True)
-                print('contentTagCountDictLi')
-                print(contentTagCountDictLi)
-
         responseDict['contentTagCountDictLi'] = contentTagCountDictLi
         if len(contentTagCountDictLi):
             responseDict['contentTagCountDictLi'] = contentTagCountDictLi
+
         if len(contentTagCountDictLi):
             responseDict['tagType'] = contentTagCountDictLi[0]['type']
         else:

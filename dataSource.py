@@ -32923,6 +32923,11 @@ tagSearchWordLi =  [
       "type": "监管预警"
     },
     {
+      "eventName": "警示",
+      "tagEvent": "监管",
+      "type": "监管预警"
+    },
+    {
       "eventName": "监管函",
       "tagEvent": "监管函",
       "type": "监管预警"

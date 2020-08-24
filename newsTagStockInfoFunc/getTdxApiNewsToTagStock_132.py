@@ -99,12 +99,14 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
     print('res_Type')
     print(res_code)
     print(res_Type)
+    print(res_tittle)
     print('type')
     print('-----------------------')
 
     if (res_code):
+        print('插入')
         # if(res_Type):
-        sql = "INSERT INTO app_config_shares_news_info (id,content,title,code,time,stockName,market,created_by,last_modified_by,gmt_create,gmt_modified) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON duplicate KEY UPDATE title = title " % (
+        sql = "INSERT INTO app_config_shares_news_info (id,content,title,code,time,stock_name,market,created_by,last_modified_by,gmt_create,gmt_modified) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON duplicate KEY UPDATE title = title " % (
             id, res_content, res_tittle, res_code, res_time, res_stockName, res_market, created_by, last_modified_by,
             gmt_create, gmt_modified)
         cursor02.execute(sql)

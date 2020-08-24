@@ -6,7 +6,7 @@ import uuid
 from time import gmtime, strftime
 import config
 
-tdxMarketCode = '131'
+tdxMarketCode = '132'
 
 apiIPAdress = config.apiIPAdress['dev']
 # {

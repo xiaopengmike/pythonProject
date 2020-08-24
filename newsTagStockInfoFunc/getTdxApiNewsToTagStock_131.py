@@ -4,8 +4,19 @@ import requests
 import json
 import uuid
 from time import gmtime, strftime
+import config
 
 tdxMarketCode = '131'
+
+apiIPAdress = config.apiIPAdress['dev']
+# {
+#     'local':'localhost',
+#     'dev':'47.107.33.27',
+#     'uat':'47.107.33.27',
+#     'prod':'47.107.33.27',
+# }
+print('apiIPAdress:'+apiIPAdress)
+
 
 
 def getTdxStockMarketNews(marketIndex):
@@ -57,7 +68,8 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
     tittle = newsResult['title']
     content = newsResult['content']
     time = newsResult['publish_time']
-    url = "http://localhost:8891/stockTagSearch"
+
+    url = "http://"+apiIPAdress+":8891/stockTagSearch"
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
     }

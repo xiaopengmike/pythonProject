@@ -110,8 +110,12 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
             id, res_content, res_tittle, res_code, res_time, res_stockName, res_market, created_by, last_modified_by,
             gmt_create, gmt_modified)
         cursor02.execute(sql)
-        connection02.commit()
 
+        #删除30天前的新闻数据
+        sql02 = "DELETE FROM app_config_shares_news_info WHERE gmt_create < NOW() - INTERVAL 30 DAY"
+        cursor02.execute(sql02)
+
+        connection02.commit()
 
 for newsResult in tdxNewsDictLi:
     try:

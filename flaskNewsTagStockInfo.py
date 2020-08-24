@@ -1,8 +1,6 @@
 # api输入文章content，
 # 返回content，market，code
-
 # coding=utf-8
-
 import flask
 import json
 from flask import request
@@ -15,6 +13,9 @@ server = flask.Flask(__name__)
 @server.route('/stockTagSearch', methods=['post'])
 def stockTagSearch():
     # 获取到post的数据
+    tdxMarketCode = request.form.get('tdxMarketCode')
+    print('tdxMarketCode' + ':' + tdxMarketCode)
+
     content = request.form.get('content')
     tittle = request.form.get('tittle')
     time = request.form.get('time')
@@ -26,7 +27,12 @@ def stockTagSearch():
     print(newsContentDict)
 
     # 统计股票 公司预警事件出现次数
-    stockSearchWordLi = dataSource.stockSearchWordLi
+    # HK、HS、US股票数据分开，或合并
+    if (tdxMarketCode == '131'):
+        stockSearchWordLi = dataSource.hsStockSearchWordLi
+    if (tdxMarketCode == '132'):
+        stockSearchWordLi = dataSource.hkStockSearchWordLi
+
     tagSearchWordLi = dataSource.tagSearchWordLi
 
     def strStockTagCount(responseDict):
@@ -39,7 +45,6 @@ def stockTagSearch():
         for stockSearchWordDic in stockSearchWordLi:
             if titleStr.count(stockSearchWordDic['name']):
                 print(stockSearchWordDic)
-                # contentStockCountDict[stockSearchWordDic['name']] = titleStr.count(stockSearchWordDic['name'])
                 contentStockCountDict = stockSearchWordDic
                 contentStockCountDict['count'] = titleStr.count(stockSearchWordDic['name'])
                 contentStockCountDictLi.append(contentStockCountDict)
@@ -47,14 +52,13 @@ def stockTagSearch():
         contentStockCountDictLi.sort(key=lambda k: (k.get('count', 0)), reverse=True)
         print(contentStockCountDictLi)
         # 判断标题中是否有 和count最大相等的第二个，如果有去内容中判断
-        if len(contentStockCountDictLi)>1:
+        if len(contentStockCountDictLi) > 1:
             if (contentStockCountDictLi[0]['count'] == contentStockCountDictLi[1]['count']):
                 contentStockCountDictLi = []
                 contentStockCountDict = {}
                 for stockSearchWordDic in stockSearchWordLi:
                     if contentStr.count(stockSearchWordDic['name']):
                         print(stockSearchWordDic)
-                        # contentStockCountDict[stockSearchWordDic['name']] = contentStr.count(stockSearchWordDic['name'])
                         contentStockCountDict = stockSearchWordDic
                         contentStockCountDict['count'] = contentStr.count(stockSearchWordDic['name'])
                         contentStockCountDictLi.append(contentStockCountDict)
@@ -79,10 +83,8 @@ def stockTagSearch():
         contentTagCountDictLi = []
         contentTagCountDict = {}
         for tagSearchWordDic in tagSearchWordLi:
-            # print(tagSearchWordDic['name'])
             if titleStr.count(tagSearchWordDic['eventName']):
                 print(tagSearchWordDic)
-                # contentTagCountDict[tagSearchWordDic['name']] = titleStr.count(tagSearchWordDic['name'])
                 contentTagCountDict = tagSearchWordDic
                 contentTagCountDict['count'] = titleStr.count(tagSearchWordDic['eventName'])
                 contentTagCountDictLi.append(contentTagCountDict)
@@ -98,7 +100,6 @@ def stockTagSearch():
                 for tagSearchWordDic in tagSearchWordLi:
                     if contentStr.count(tagSearchWordDic['eventName']):
                         print(tagSearchWordDic)
-                        # contentStockCountDict[stockSearchWordDic['name']] = contentStr.count(stockSearchWordDic['name'])
                         contentTagCountDict = tagSearchWordDic
                         contentTagCountDict['count'] = contentStr.count(tagSearchWordDic['eventName'])
                         contentTagCountDictLi.append(contentTagCountDict)

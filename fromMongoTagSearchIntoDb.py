@@ -1,6 +1,5 @@
 # coding:utf-8
 
-
 import pymongo
 import pymysql
 import requests
@@ -35,7 +34,6 @@ charset='utf8',
 db=db_name02
 )
 cursor02 = connection02.cursor(cursor=pymysql.cursors.DictCursor)
-
 
 #循环发form请求
 def itemApiResIntoDb(newsResult):

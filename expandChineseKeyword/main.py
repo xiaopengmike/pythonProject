@@ -22,176 +22,27 @@ db=db_name02
 
 #关键词字典列表
 keywordDictLi = [
-    {
-      "eventName": "欠税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
+{
+      "eventName": "受贿",
+      "tagEvent": "贿赂  ",
+      "type": "管理预警"
     },
     {
-      "eventName": "拖欠税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
+      "eventName": "贪污 ",
+      "tagEvent": "贿赂  ",
+      "type": "管理预警"
     },
     {
-      "eventName": "欠缴税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
+      "eventName": "行贿 ",
+      "tagEvent": "贿赂  ",
+      "type": "管理预警"
     },
     {
-      "eventName": "补缴税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
+      "eventName": "贿赂  ",
+      "tagEvent": "贿赂  ",
+      "type": "管理预警"
     },
-    {
-      "eventName": "补交税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "欠税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "追缴税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "所欠税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "清缴欠税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "欠税金额",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "追缴欠税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "企业欠税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "逃漏税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "逃税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "漏税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "偷税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "逃税漏税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "偷税漏税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "偷漏税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "税务欺诈 ",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "避税 ",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "偷逃税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "逃税避税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "偷逃税款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "隐瞒收入",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "逃避税收",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "非法避税                       ",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "税务问题",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "涉嫌偷税漏税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "转移资产",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "逃避纳税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "偷税逃税",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "做假账",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },
-    {
-      "eventName": "税务罚款",
-      "tagEvent": "税务问题",
-      "type": "信用预警"
-    },]
+]
 
 tagEvent=keywordDictLi[0]['tagEvent']
 type=keywordDictLi[0]['type']

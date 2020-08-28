@@ -83,29 +83,52 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
     res_stockName = response['stockName']
     res_market = response['market']
     res_contentStockCountDictLi = response['contentStockCountDictLi']
-    res_contentStockCountDictLi = json.dumps(res_contentStockCountDictLi,ensure_ascii=False)
+    # res_contentStockCountDictLi = json.dumps(res_contentStockCountDictLi,ensure_ascii=False)
     created_by = 'kaisa.xp06'
     last_modified_by = 'kaisa.xp06'
     gmt_create = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     gmt_modified = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    id = str(uuid.uuid4()).replace("-", "")[:18]
+
 
     print(res_code)
     print('res_Type')
     print('type')
     print('-----------------------')
 
-    if (res_code):
-            sql = "INSERT INTO app_config_shares_news_info_get_all_shares (id,content,title,code,time,stock_name,market,all_stock_dict_li,created_by,last_modified_by,gmt_create,gmt_modified) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON duplicate KEY UPDATE title = title " % (
-            id, res_content, res_tittle, res_code, res_time, res_stockName, res_market,res_contentStockCountDictLi,created_by, last_modified_by,
-            gmt_create, gmt_modified)
+    #如果标到了股票,每个股票+此资讯单独入库
+    newsItemWithOneStockDic = {}
+    if len(res_contentStockCountDictLi)>0:
+        for stockCountDict in res_contentStockCountDictLi:
+            id = str(uuid.uuid4()).replace("-", "")[:18]
+            newsItemWithOneStockDic['name'] = stockCountDict['name']
+            newsItemWithOneStockDic['market'] = stockCountDict['market']
+            newsItemWithOneStockDic['SecuCode'] = stockCountDict['SecuCode']
+            newsItemWithOneStockDic['content'] = res_content
+            newsItemWithOneStockDic['title'] = res_tittle
+            newsItemWithOneStockDic['time'] = res_time
+
+            sql = "INSERT INTO app_config_shares_news_info_get_all_shares (id,content,title,code,publish_time,stock_name,market,created_by,last_modified_by,gmt_create,gmt_modified) VALUE ('{id}','{title}','{content}','{code}','{publish_time}','{stock_name}','{market}','{created_by}','{last_modified_by}','{gmt_create}','{gmt_modified}') ON DUPLICATE KEY UPDATE id='{id}',content='{content}',title='{title}',code='{code}',publish_time='{publish_time}',stock_name='{stock_name}',market='{market}',created_by='{created_by}',last_modified_by='{last_modified_by}',gmt_create='{gmt_create}',gmt_modified='{gmt_modified}'".format(
+                id=id,
+                content=res_content,
+                title=res_tittle,
+                publish_time=res_time,
+                code=newsItemWithOneStockDic['SecuCode'],
+                stock_name=newsItemWithOneStockDic['name'],
+                market=newsItemWithOneStockDic['market'],
+                created_by=created_by,
+                last_modified_by=last_modified_by,
+                gmt_create=gmt_create,
+                gmt_modified=gmt_modified,
+            )
+
             cursor02.execute(sql)
 
-            #删除30天前的新闻数据
-            sql02 = "DELETE FROM app_config_shares_news_with_event_tag WHERE gmt_create < NOW() - INTERVAL 30 DAY"
-            cursor02.execute(sql02)
-
             connection02.commit()
+
+    # if (res_code):
+    #         sql = "INSERT INTO app_config_shares_news_info_get_all_shares (id,content,title,code,time,stock_name,market,created_by,last_modified_by,gmt_create,gmt_modified) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON duplicate KEY UPDATE title = title " % (
+    #         id, res_content, res_tittle, res_code, res_time, res_stockName, res_market,created_by, last_modified_by,gmt_create, gmt_modified)
+
 
 for newsResult in tdxNewsDictLi:
     try:

@@ -14,7 +14,7 @@ print('apiIPAdress:'+apiIPAdress)
 
 def getTdxStockMarketNews(marketIndex):
     url = 'http://8.129.11.22:7619/TQLEX?Entry=CWServ.mzx_yw'
-    postJson = json.dumps({"Params": [marketIndex, "", "1", "999"]})
+    postJson = json.dumps({"Params": [marketIndex, "", "1", "9999"]})
     tdxResponse = requests.post(url, data=postJson).text
     tdxResponse = json.loads(tdxResponse)
     return tdxResponse
@@ -31,6 +31,9 @@ for tdxNewsItem in tdxNewsLi:
         tdxNewsDict['title'] = tdxNewsItem[0]
         tdxNewsDict['content'] = tdxNewsItem[2]
         tdxNewsDict['publish_time'] = tdxNewsItem[1]
+        # 在这里造数据，测试特殊情况
+        # tdxNewsDict['title'] = '中信证券研报称，中国石化中报基本符合预期02'
+        # tdxNewsDict['content'] = '中信证券研报称，中国石化中报基本符合预期02'
         tdxNewsDictLi.append(tdxNewsDict)
     except:
         continue
@@ -90,6 +93,7 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
     gmt_modified = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
 
+    print(res_stockName)
     print(res_code)
     print('res_Type')
     print('type')
@@ -107,6 +111,7 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
             newsItemWithOneStockDic['title'] = res_tittle
             newsItemWithOneStockDic['time'] = res_time
 
+            # 如果有按股票重复，则用ON DUPLICATE KEY UPDATE更新那条数据。
             sql = "INSERT INTO app_config_shares_news_info_get_all_shares (id,content,title,code,publish_time,stock_name,market,created_by,last_modified_by,gmt_create,gmt_modified) VALUE ('{id}','{title}','{content}','{code}','{publish_time}','{stock_name}','{market}','{created_by}','{last_modified_by}','{gmt_create}','{gmt_modified}') ON DUPLICATE KEY UPDATE id='{id}',content='{content}',title='{title}',code='{code}',publish_time='{publish_time}',stock_name='{stock_name}',market='{market}',created_by='{created_by}',last_modified_by='{last_modified_by}',gmt_create='{gmt_create}',gmt_modified='{gmt_modified}'".format(
                 id=id,
                 content=res_content,
@@ -126,7 +131,7 @@ def itemApiResIntoDb(newsResult, tdxMarketCode):
             connection02.commit()
 
     # if (res_code):
-    #         sql = "INSERT INTO app_config_shares_news_info_get_all_shares (id,content,title,code,time,stock_name,market,created_by,last_modified_by,gmt_create,gmt_modified) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON duplicate KEY UPDATE title = title " % (
+    #         sql = "INSERT INTO app_config_shares_news_info_get_all_shares (id,content,title,code,time,stock_name,market,created_by,last_nmodified_by,gmt_create,gmt_modified) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s') ON duplicate KEY UPDATE title = title " % (
     #         id, res_content, res_tittle, res_code, res_time, res_stockName, res_market,created_by, last_modified_by,gmt_create, gmt_modified)
 
 
